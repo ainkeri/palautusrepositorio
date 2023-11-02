@@ -26,13 +26,13 @@ class StatisticsService:
 
         return list(players_of_team)
 
-    def top(self, how_many):
+    def top(self, how_many, method):
         sorted_players = sorted(
             self._players,
             reverse=True,
-            key=sort_by_points
+            key=method
         )
-
+                
         result = []
         i = 0
         while i <= how_many:
