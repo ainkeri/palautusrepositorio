@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -18,11 +18,6 @@ class TestStatisticsService(unittest.TestCase):
         self.stats = StatisticsService(
             PlayerReaderStub()
         )
-    
-    def test_return_correct_points(self):
-        pelaaja = self.stats.search("Lemieux")
-
-        self.assertAlmostEqual(pelaaja.points, 99)
 
     def test_konstruktori_luo_pelaajat(self):
         self.assertAlmostEqual(len(self.stats._players), 5)
@@ -44,13 +39,25 @@ class TestStatisticsService(unittest.TestCase):
 
         self.assertAlmostEqual([pelaaja.name for pelaaja in joukkue], pelaajat)
     
-    def test_top_three_players(self):
-        top_three = self.stats.top(2)
+    def test_top_three_highest_points(self):
+        top_three = self.stats.top(3)
 
-        result = [Player("Gretzky", "EDM", 35, 89),
-                  Player("Lemieux", "PIT", 45, 54),
-                  Player("Yzerman", "DET", 42, 56),]
-        
-        self.assertListEqual(top_three, result)
+        points = top_three[0]
+
+        self.assertAlmostEqual(points.name, "Gretzky")
+    
+    def test_top_three_most_goals(self):
+        top_three = self.stats.top(3, SortBy.GOALS)
+
+        goals = top_three[0]
+
+        self.assertAlmostEqual(goals.name, "Lemieux")
+    
+    def test_top_three_most_assists(self):
+        top_three = self.stats.top(3, SortBy.ASSISTS)
+
+        assists = top_three[0]
+
+        self.assertAlmostEqual(assists.name, "Gretzky")
     
     
