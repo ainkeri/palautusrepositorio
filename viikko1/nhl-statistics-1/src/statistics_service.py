@@ -37,28 +37,17 @@ class StatisticsService:
 
         return list(players_of_team)
 
-    def top(self, how_many, method):
+    def top(self, how_many, method=SortBy.POINTS):
 
-        if method == SortBy.POINTS.value:
-            sorted_players = sorted(
-                self._players,
-                reverse=True,
-                key=sort_by_points
-            )
-    
-        elif method == SortBy.GOALS.value:
-            sorted_players = sorted(
-                self._players,
-                reverse=True,
-                key=sort_by_goals
-            )
+        sort = {SortBy.POINTS: sort_by_points,
+                SortBy.GOALS: sort_by_goals,
+                SortBy.ASSISTS: sort_by_assists}
 
-        elif method == SortBy.ASSISTS.value:
-            sorted_players = sorted(
-                self._players,
-                reverse=True,
-                key=sort_by_assists
-            )
+        sorted_players = sorted(
+            self._players,
+            reverse=True,
+            key=sort[method]
+        )
 
         result = []
         i = 0
