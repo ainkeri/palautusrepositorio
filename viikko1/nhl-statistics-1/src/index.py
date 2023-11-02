@@ -1,11 +1,5 @@
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player_reader import PlayerReader
-from enum import Enum
-
-class SortBy(Enum):
-    POINTS = 1
-    GOALS = 2
-    ASSISTS = 3
 
 def main():
     stats = StatisticsService(PlayerReader("https://studies.cs.helsinki.fi/nhlstats/2022-23/players.txt"))
