@@ -12,7 +12,7 @@ class App:
 
             if command == "new":
                 (username, password) = self._read_credentials()
-
+                
                 try:
                     self.user_sevice.create_user(username, password)
                     self.io.write("New user registered")
