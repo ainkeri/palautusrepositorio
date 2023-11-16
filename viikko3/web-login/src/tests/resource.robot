@@ -28,3 +28,12 @@ Main Page Should Be Open
 
 Go To Login Page
     Go To  ${LOGIN_URL}
+
+Login Should Be Open
+    Go To Starting Page
+
+Go To Starting Page
+    Go To  ${HOME_URL}
+
+Register Page Should Be Open
+    Title Should Be  Register
