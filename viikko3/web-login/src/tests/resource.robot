@@ -4,10 +4,11 @@ Library  ../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5001
-${DELAY}  0.5 seconds
+${DELAY}  0.1 seconds
 ${HOME_URL}  http://${SERVER}
 ${LOGIN_URL}  http://${SERVER}/login
 ${REGISTER_URL}  http://${SERVER}/register
+${WELCOME_URL}  http://${SERVER}/welcome
 
 *** Keywords ***
 Open And Configure Browser
@@ -37,3 +38,9 @@ Go To Starting Page
 
 Register Page Should Be Open
     Title Should Be  Register
+
+Welcome Page Should Be Open
+    Title Should Be  Welcome to Ohtu Application!
+
+Go To Registration Page
+    Go To  ${REGISTER_URL}
