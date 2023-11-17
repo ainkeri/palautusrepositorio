@@ -40,7 +40,64 @@ Register With Nonmatching Password And Password Confirmation
     Submit Registration
     Registration Should Fail With Message  Passwords do not match
 
+Login After Succesful Registration
+    Set Username  jaakko
+    Set Password  salasana123
+    Set Password Confirmation  salasana123
+    Submit Registration
+    Registration Should Succeed
+    Submit Main
+    Submit Logout
+    Logout Should Succeed
+    Set Username  jaakko
+    Set Password  salasana123
+    Login With Valid Credentials
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Username  jaakko
+    Set Password  salasana123
+    Set Password Confirmation  salasana124
+    Submit Registration
+    Registration Should Fail With Message  Passwords do not match
+    Submit Login Link
+    Logout Should Succeed
+    Set Username  jaakko
+    Set Password  salasana123
+    Login With Invalid Credentials
+    Login Should Fail With Message  Username does not exist
+
 *** Keywords ***
+Login With Valid Credentials
+    Submit Login
+    Login Should Succeed
+
+Login With Invalid Credentials
+    Submit Login
+
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
+    Page Should Contain  ${message}
+
+Submit Login
+    Click Button  Login
+
+Submit Login Link
+    Click Link  Login
+
+Login Should Succeed
+    Main Page Should Be Open
+
+Submit Main
+    Click Link  Continue to main page
+
+Submit Logout
+    Click Button  Logout
+
+Logout Should Succeed
+    Login Page Should Be Open
+
 Registration Should Succeed
     Welcome Page Should Be Open
 
