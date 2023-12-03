@@ -4,39 +4,49 @@ from ostos import Ostos
 class Ostoskori:
     def __init__(self):
         self.ostokset = []
-        self._lukumaara = 1
-        # ostoskori tallettaa Ostos-oliota, yhden per korissa oleva Tuote
 
     def tavaroita_korissa(self):
-        return len(self.ostokset)
-        # kertoo korissa olevien tavaroiden lukumäärän
-        # eli jos koriin lisätty 2 kpl tuotetta "maito", tulee metodin palauttaa 2 
-        # samoin jos korissa on 1 kpl tuotetta "maito" ja 1 kpl tuotetta "juusto", tulee metodin palauttaa 2 
+        return sum(ostos.lukumaara() for ostos in self.ostokset)
 
     def hinta(self):
         loppu_hinta = sum(ostos.hinta() for ostos in self.ostokset)
         return loppu_hinta
-        # kertoo korissa olevien ostosten yhteenlasketun hinnan
 
     def lisaa_tuote(self, lisattava: Tuote):
         for ostos in self.ostokset:
             if ostos.tuote == lisattava:
-                self._lukumaara += 1
-                ostos.muuta_lukumaaraa(self._lukumaara)
-        ostos = Ostos(lisattava)
-        if ostos not in self.ostokset:
+                ostos.muuta_lukumaaraa(1)
+                break
+        else:
+            ostos = Ostos(lisattava)
             self.ostokset.append(ostos)
-        # lisää tuotteen
 
     def poista_tuote(self, poistettava: Tuote):
-        # poistaa tuotteen
-        pass
+        for ostos in self.ostokset:
+            if ostos.tuote == poistettava:
+                self.ostokset.remove(ostos)
 
     def tyhjenna(self):
-        pass
-        # tyhjentää ostoskorin
+        self.ostokset.clear()
 
     def ostokset(self):
         return self.ostokset
-        # palauttaa listan jossa on korissa olevat ostos-oliot
-        # kukin ostos-olio siis kertoo mistä tuotteesta on kyse JA kuinka monta kappaletta kyseistä tuotetta korissa on
+
+    def tulosta_ostokset(self):
+        for ostos in self.ostokset:
+            print(f'Tuote: {ostos.tuote.nimi()}, Lukumäärä: {ostos.lukumaara()}')
+
+
+ostoskori = Ostoskori()
+tuote1 = Tuote("Maito", 2.5)
+#tuote2 = Tuote("Juusto", 5.0)
+tuote3 = Tuote("Maito", 2.5)
+
+ostoskori.lisaa_tuote(tuote1)
+#ostoskori.lisaa_tuote(tuote2)
+ostoskori.lisaa_tuote(tuote3)
+
+print(f'Tavaroita korissa: {ostoskori.tavaroita_korissa()}')
+print(f'Kokonaishinta: {ostoskori.hinta()}')
+
+ostoskori.tulosta_ostokset()
